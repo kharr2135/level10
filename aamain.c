@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "fileutil.h"
 
-
 int main(int argc, char *argv[])
+//for errors
 {
-	if (argc < 1)
+	if (argc < 2)  // Fix: argc must be >= 2 because argv[1] is the filename
 	{
 		fprintf(stderr, "Must supply a text file name\n");
 		exit(1);
@@ -22,9 +21,9 @@ int main(int argc, char *argv[])
 	{
 		char target[100];
 		printf("Text to search for: ");
-		fgets(target, 100, stdin);
-		
-		// Trim newline
+		if (fgets(target, sizeof(target), stdin) == NULL) break;
+
+		//newline
 		char *nl = strchr(target, '\n');
 		if (nl) *nl = '\0';
 		
@@ -37,6 +36,5 @@ int main(int argc, char *argv[])
 			printf("Not found!\n");
 	}
 
-    freeAA(lines, lineCount);
+	freeAA(lines, lineCount);
 }
-
